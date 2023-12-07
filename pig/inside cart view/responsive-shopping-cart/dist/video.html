@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Video Popup</title>
+  <style>
+    /* Styles for the video container */
+    .video-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    /* Styles for the video element */
+    video {
+      width: 80%;
+      max-width: 800px;
+    }
+
+    /* Styles for the control buttons */
+    .controls {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Styles for the time display */
+    .time {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="video-container">
+    <video id="videoPlayer" controls>
+      <source src="video.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="controls">
+      <div class="time" id="currentTime">00:00</div>
+      <button onclick="playPause()">Play/Pause</button>
+      <a href="video.mp4" download>
+        <button>Download</button>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    const video = document.getElementById('videoPlayer');
+    const currentTimeDisplay = document.getElementById('currentTime');
+
+    function playPause() {
+      if (video.paused) {
+        video.play();
+      } else {
+        video.pause();
+      }
+    }
+
+    // Update current time display
+    video.addEventListener('timeupdate', () => {
+      const currentMinutes = Math.floor(video.currentTime / 60);
+      const currentSeconds = Math.floor(video.currentTime - currentMinutes * 60);
+      const formattedTime = `${currentMinutes.toString().padStart(2, '0')}:${currentSeconds.toString().padStart(2, '0')}`;
+      currentTimeDisplay.textContent = formattedTime;
+    });
+  </script>
+</body>
+</html>
